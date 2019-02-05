@@ -6,14 +6,16 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
 public class LoginTests {
     WebDriver driver;
-    @BeforeClass
+    @BeforeMethod
     public void setUp() {//if you stock in Terminal just click esc+q and then on  wq at at the same time and you will go back
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
@@ -22,12 +24,17 @@ public class LoginTests {
     }
 
     @Test
-    public void loignTest1() {
+    public void loginTest1() {
         driver.get("http://secure.smartbearsoftware.com/samples/testcomplete12/WebOrders/login.aspx");
         driver.findElement(By.id("ctl00_MainContent_username")).sendKeys("Tester");
         driver.findElement(By.id("ctl00_MainContent_password")).sendKeys("test" + Keys.ENTER);
         Assert.assertEquals(driver.getTitle(), "Web Orders");
     }
+    @AfterMethod
+    public void CleanUp() {
+        driver.close();
+
     }
+}
 
 //How to convert this project into local gi t repo: First, we have to go to Terminal. Second, initialize local repo by writing git init
